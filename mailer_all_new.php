@@ -1,0 +1,81 @@
+<?php
+
+header('Content-Type: text/html; charset=iso-8859-1');
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<meta charset="iso-8859-1" />
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+<style type="text/css">
+	h1{margin:1em; text-align:right;}
+	textarea{background-color:#EEE; border:1px solid #AAA; width:100%; height:3em;}
+	textarea.large{height:15em;}
+	textarea.required{border:1px solid #000; background-color:#FFF;}
+</style>
+
+</head>
+
+<body>
+
+<h1>looking good<br/>my mail<br/>slow down</h1>
+
+
+<?php
+require_once('milkman/milkman.php');
+
+$errors = array();
+$sent = false;
+if($_SERVER['REQUEST_METHOD'] === 'POST')
+{
+	$errors = Milkman::validate();
+
+	if(is_null($errors) || empty($errors))
+	{
+		$sent = Milkman::send($_POST);
+	}
+
+}
+?>
+<div class="container">
+	<div class="row">
+		<!-- <div class="col-xs-12"> -->
+			<?php ($_SERVER['REQUEST_METHOD'] === 'POST' && $sent === false)? 'posted & not sent' : 'posted and sent';?>
+		<!-- </div> -->
+	</div>
+	<div class="row">
+		<!-- <div class="col-xs-12"> -->
+		
+			<?php 
+			if(!empty($errors))
+				print_r($errors);
+			if($sent === true)
+				echo "<h2>message sent</h2>";
+			
+			?>
+		<!-- </div> -->
+	</div>
+	<div class="row">
+		<!-- <div class="col-xs-12"> -->
+			<?= Milkman::form($_SERVER['PHP_SELF'], $_POST); ?>
+			
+		<!-- </div> -->
+	</div>
+
+	<div class="row">
+		<div class="col-xs-12">
+			<pre><?php echo file_get_contents('milkman/readme.txt'); ?></pre>
+		</div>
+	</div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+</body>
+</html>
