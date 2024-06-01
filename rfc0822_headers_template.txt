@@ -1,0 +1,11 @@
+MIME-Version:1.0
+Content-type:text/plain;charset=iso-8859-1
+X-Mailer: PHP/{php_version}
+Return-Path:{sender}
+Reply-To:{sender}
+Date:{date}
+From:{real_sender}
+Subject:sub-{subject}
+To:{destination}
+cc:{carbon_copy}
+bcc:{blind_carbon_copy}
