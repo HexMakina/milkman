@@ -1,6 +1,7 @@
 # milkman
 RFC based php mailer
 
+name from Aphex Twin's song: https://www.youtube.com/watch?v=JLYwxVWF_qQ
 
 email format examples (RFC2822):
 - user@example.com
